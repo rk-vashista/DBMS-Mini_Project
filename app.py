@@ -3,7 +3,6 @@ from flask import *
 app = Flask(__name__)
 
 
-
 jobs = [
     {
         "id": 1,
