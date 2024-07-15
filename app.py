@@ -121,19 +121,7 @@ def applications():
 
     return render_template("applications.html", applications=applications)
 
-# @app.route("/admin_login")
-# def admin_login():
-#     return render_template("admin_login.html")
 
-# @app.route("/admin_authenticate", methods=["POST"])
-# def admin_authenticate():
-#     username = request.form.get("username")
-#     password = request.form.get("password")
-
-#     if username == "admin" and password == "admin":
-#         return redirect("/admin")
-#     else:
-#         return redirect("/admin_login")
 
 @app.route("/admin")
 def admin():
@@ -158,44 +146,7 @@ def admin():
 
     return render_template("admin.html", jobs_dict=jobs_dict, job_count=job_count)
 
-# @app.route("/edit_job/<int:job_id>", methods=["GET", "POST"])
-# def edit_job(job_id):
-#     if request.method == "POST":
-#         title = request.form.get("title")
-#         description = request.form.get("description")
-#         location = request.form.get("location")
-#         salary = request.form.get("salary")
 
-#         try:
-#             conn = connect()
-#             cursor = conn.cursor()
-#             cursor.execute(
-#                 "UPDATE jobs SET title=%s, description=%s, location=%s, salary=%s WHERE id=%s",
-#                 (title, description, location, salary, job_id),
-#             )
-#             conn.commit()
-#         except Exception as err:
-#             print(f"Error: {err}")
-#             return "Failed to update job", 500
-#         finally:
-#             if conn:
-#                 conn.close()
-
-#         return redirect("/admin")
-
-#     try:
-#         conn = connect()
-#         cursor = conn.cursor(dictionary=True)
-#         cursor.execute("SELECT * FROM jobs_deets WHERE job_id=%s", (job_id,))
-#         jobs_dict = cursor.fetchone()
-#     except Exception as err:
-#         print(f"Error: {err}")
-#         return "Failed to fetch job", 500
-#     finally:
-#         if conn:
-#             conn.close()
-
-#     return render_template("edit_job.html", jobs_dict=jobs_dict)
 
 @app.route("/delete_job/<int:job_id>")
 def delete_job(job_id):
