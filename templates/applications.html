@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+    <title>My Applications</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>My Applications</h1>
+    <ul>
+        {% for app in applications %}
+        <li>Job ID: {{ app.job_id }}, Name: {{ app.name }}, Email: {{ app.email }}, Mobile: {{ app.mobile }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
