@@ -44,7 +44,7 @@ def apply_job(job_id):
         if conn:
             conn.close()
 
-    return redirect(f"/job/{job_id}")
+    return redirect("/")
 
 
 @app.route("/admin_login")
@@ -128,7 +128,7 @@ def delete_job(job_id):
     try:
         conn = connect()
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM jobs_deets WHERE j_id=%s", (job_id,))
+        cursor.execute("DELETE FROM jobs_deets WHERE job_id=%s", (job_id,))
         conn.commit()
     except Exception as err:
         print(f"Error: {err}")

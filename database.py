@@ -26,7 +26,7 @@ def load_jobs_from_db():
         jobs_db = cursor.fetchall()
 
         for job in jobs_db:
-            jobs_dict[job["j_id"]] = dict(job)
+            jobs_dict[job["job_id"]] = dict(job)
 
         return jobs_dict
     finally:
@@ -38,7 +38,7 @@ def load_job_from_db(job_id):
     try:
         conn = connect()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM jobs_deets WHERE j_id = %s", (job_id,))
+        cursor.execute("SELECT * FROM jobs_deets WHERE job_id = %s", (job_id,))
         job = cursor.fetchone()
         return job
     finally:

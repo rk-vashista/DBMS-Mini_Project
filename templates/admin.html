@@ -23,13 +23,13 @@
             <tbody>
                 {% for job in jobs_dict %}
                 <tr>
-                    <th scope="row">{{ job.j_id }}</th>
+                    <th scope="row">{{ job.job_id }}</th>
                     <td>{{ job.title }}</td>
                     <td>{{ job.salary }}</td>
                     <td>{{ job.location }}</td>
-                    <td>{{ job_count[job.j_id] if job.j_id in job_count else 0 }}</td>
+                    <td>{{ job_count[job.job_id] if job.job_id in job_count else 0 }}</td>
                     <td>
-                        <a href="/delete_job/{{ job.j_id }}" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="/delete_job/{{ job.job_id }}" class="btn btn-danger btn-sm">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
