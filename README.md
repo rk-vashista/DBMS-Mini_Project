@@ -1,56 +1,45 @@
-# Job Portal Application
+# Idiot Careers
 
-This Job Portal Application is a web-based platform designed to facilitate the process of job searching and application for both job seekers and employers. Built with Flask, a Python web framework, it offers a simple yet effective interface for managing job postings, applying for jobs, and administering job applications.
+Welcome to **Idiot Careers**, a Flask-based web application designed to connect job seekers with their dream jobs. Our platform offers a user-friendly interface for both job seekers and employers, making the job search and posting process as smooth as possible.
 
 ## Features
 
-- **Job Listings**: Browse available job listings with detailed descriptions, requirements, and application procedures.
-- **Job Application**: Apply for jobs directly through the portal with an easy-to-use form.
-- **Admin Dashboard**: For employers and administrators, manage job postings, view applications, and edit or delete job listings.
-- **Responsive Design**: Accessible on various devices, ensuring a seamless experience for all users.
+- **Job Listings**: Browse through a wide range of job listings tailored to your skills and preferences.
+- **Application Tracking**: Easily apply to jobs and track your applications in one place.
+- **User Authentication**: Secure login and registration system for both job seekers and employers.
 
 ## Installation
 
-To set up the project locally, follow these steps:
+To get started with **Idiot Careers**, follow these steps:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/job-portal.git
+   git clone https://github.com/yourusername/idiot-careers.git
    ```
-2. Navigate to the project directory:
-   ```sh
-   cd job-portal
-   ```
-3. Install the required Python packages:
+2. Install the required dependencies:
    ```sh
    pip install -r requirements.txt
    ```
-4. Activate the virtual environment:
-   - On Windows:
-     ```sh
-     .\dbproj\Scripts\activate
-     ```
-   - On Unix or MacOS:
-     ```sh
-     source dbproj/Scripts/activate
-     ```
-5. Set up the environment variables by creating a `.env` file based on the `.env.example` provided.
-
-6. Run the Flask application:
+3. activate the virtual environment:
+   on Windows:
    ```sh
-   python app.py
+   venv\Scripts\activate
    ```
+   on MacOS/Linux:
+
+   ```sh
+   source venv/bin/activate
+   ```
+4. Set up the environment variables by creating a `.env` file based on the `.env.example`.
 
 ## Usage
-
-- Visit `http://localhost:5000` to view the job listings.
-- To apply for a job, click on the job listing and fill out the application form.
-- Access the admin dashboard at `http://localhost:5000/admin` with the credentials provided in your `.env` file.
+After starting the application, navigate to http://127.0.0.1:5000/ in your web browser to access Idiot Careers.
 
 ## Contributing
+We welcome contributions to Idiot Careers! Please read our CONTRIBUTING.md for guidelines on how to make a contribution.
 
-Contributions to the Job Portal Application are welcome! Please feel free to fork the repository, make your changes, and submit a pull request.
+## Credits
+Idiot Careers was created by Morons & Morons, Inc. Special thanks to all contributors and the Flask community.
 
 ## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Idiot Careers is released under the MIT License. See LICENSE for details.

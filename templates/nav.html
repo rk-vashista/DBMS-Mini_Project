@@ -1,11 +1,58 @@
-<nav class="navbar bg-body-tertiary">
-    <div class="container-fluid shadow-sm ">
-      <a class="navbar-brand" href="#">
-        <img src="/static/logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-        Idiot Careers
-      </a>
+<style>
+  .navbar {
+    background: linear-gradient(135deg, #ef2930, #8b77e3);
+    color: #ffffff;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
 
-      <a href="/applications">MY applications</a>
+  .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .navbar a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 16px;
+    margin: 0 8px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+  }
+
+  .navbar a:hover, .navbar a:focus {
+    background-color: rgba(255,255,255,0.2);
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .navbar-brand img {
+    margin-right: 10px;
+  }
+
+  .link-container {
+    display: flex;
+    align-items: center;
+  }
+</style>
+
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid shadow-sm ">
+    <a class="navbar-brand" href="#">
+      <img src="/static/logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+      Idiot Careers
+    </a>
+
+    <div class="link-container">
+      <a href="/applications" style="color: ;">MY applications</a>
       <a href="/logout">Log out</a>
     </div>
-  </nav>
+  </div>
+</nav>

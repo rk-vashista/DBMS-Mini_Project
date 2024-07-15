@@ -4,25 +4,38 @@
     <title>My Applications</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #eaeaea;
+            color: #333;
         }
         h1 {
-            color: #333;
+            color: #444;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 40px;
         }
         ul {
             list-style-type: none;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         li {
             background-color: #fff;
-            border: 1px solid #ddd;
+            border: none;
             margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        li > span {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -30,7 +43,12 @@
     <h1>My Applications</h1>
     <ul>
         {% for app in applications %}
-        <li>Job ID: {{ app.job_id }}, Name: {{ app.name }}, Email: {{ app.email }}, Mobile: {{ app.mobile }}</li>
+        <li>
+            <span>Job ID: {{ app.job_id }}</span>
+            <span>Name: {{ app.name }}</span>
+            <span>Email: {{ app.email }}</span>
+            <span>Mobile: {{ app.mobile }}</span>
+        </li>
         {% endfor %}
     </ul>
 </body>
