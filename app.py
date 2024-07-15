@@ -265,7 +265,7 @@ def login():
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for("login"))
+    return redirect("/")
 
 @app.route("/my_applications")
 def my_applications():
