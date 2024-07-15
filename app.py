@@ -1,79 +1,143 @@
-from flask import *
+from flask import Flask, request, redirect, render_template
+from database import load_jobs_from_db, load_job_from_db, connect
 
 app = Flask(__name__)
 
-
-jobs = [
-    {
-        "id": 1,
-        "title": "Chief Unicorn Wrangler",
-        "location": "Atlantis",
-        "salary": "1,000,000 seashells/year"
-    },
-    {
-        "id": 2,
-        "title": "Professional Cloud Painter",
-        "location": "Sky City",
-        "salary": "300 rainbows/month"
-    },
-    {
-        "id": 3,
-        "title": "Senior Galactic Overlord Consultant",
-        "location": "Mars",
-        "salary": "42 galactic credits/hour"
-    },
-    {
-        "id": 4,
-        "title": "Director of Dragon Training",
-        "location": "Westeros",
-        "salary": "75,000 gold coins/year"
-    },
-    {
-        "id": 5,
-        "title": "Quantum Banana Peel Analyst",
-        "location": "Schrodinger's Box",
-        "salary": "2 Schrödinger's cats/day"
-    },
-    {
-        "id": 6,
-        "title": "Time Travel Logistics Coordinator",
-        "location": "Year 3000",
-        "salary": "60,000 time units/decade"
-    },
-    {
-        "id": 7,
-        "title": "Interdimensional Space Janitor",
-        "location": "Multiverse Headquarters",
-        "salary": "50 dark matter particles/hour"
-    },
-    {
-        "id": 8,
-        "title": "Head of Fairy Tale Quality Assurance",
-        "location": "Enchanted Forest",
-        "salary": "80,000 magic beans/year"
-    },
-    {
-        "id": 9,
-        "title": "Virtual Reality Dinosaur Dentist",
-        "location": "Jurassic Simulation",
-        "salary": "200 virtual teeth cleaned/month"
-    },
-    {
-        "id": 10,
-        "title": "Master of Invisible Ink Documentation",
-        "location": "Secret Spy Base",
-        "salary": "1,500 spy gadgets/year"
-    }
-]
 @app.route("/")
-def hello_world():
-    return render_template('home.html',jobs=jobs)
+def show_job():
+    jobs_dict = load_jobs_from_db()
+    if not jobs_dict:
+        return "Not Found", 404
 
-# renders API page
+    return render_template("home.html", jobs_dict=jobs_dict)
+
 @app.route("/api/jobs")
 def list_jobs():
-    return jsonify(jobs)
+    return load_jobs_from_db()
+
+@app.route("/job/<int:job_id>")
+def show_job_details(job_id):
+    jobs_dict = load_job_from_db(job_id)
+    if not jobs_dict:
+        return "Not Found", 404
+
+    return render_template("jobpage.html", jobs_dict=jobs_dict)
+
+@app.route("/apply_job/<int:job_id>", methods=["POST"])
+def apply_job(job_id):
+    name = request.form.get("name")
+    email = request.form.get("email")
+    phone = request.form.get("mobile")
+
+    try:
+        conn = connect()
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO job_application (job_id, name, email, mobile) VALUES (%s, %s, %s, %s)",
+            (job_id, name, email, phone),
+        )
+        conn.commit()
+    except Exception as err:
+        print(f"Error: {err}")
+        return "Failed to apply job", 500
+    finally:
+        if conn:
+            conn.close()
+
+    return redirect(f"/job/{job_id}")
+
+
+@app.route("/admin_login")
+def admin_login():
+    return render_template("admin_login.html")
+
+@app.route("/admin_authenticate", methods=["POST"])
+def admin_authenticate():
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    if username == "admin" and password == "admin":
+        return redirect("/admin")
+    else:
+        return redirect("/admin_login")
+
+@app.route("/admin")
+def admin():
+    try:
+        conn = connect()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM jobs_deets")
+        jobs_dict = cursor.fetchall()
+
+        cursor.execute("SELECT COUNT(*) AS count, job_id FROM job_application GROUP BY job_id")
+        job_counts_result = cursor.fetchall()
+        
+        # Convert the result into a dictionary for easier access in the template
+        job_count = {item['job_id']: item['count'] for item in job_counts_result}
+
+    except Exception as err:
+        print(f"Error: {err}")
+        return "Failed to fetch jobs", 500
+    finally:
+        if conn:
+            conn.close()
+
+    return render_template("admin.html", jobs_dict=jobs_dict, job_count=job_count)
+
+@app.route("/edit_job/<int:job_id>", methods=["GET", "POST"])
+def edit_job(job_id):
+    if request.method == "POST":
+        title = request.form.get("title")
+        description = request.form.get("description")
+        location = request.form.get("location")
+        salary = request.form.get("salary")
+
+        try:
+            conn = connect()
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE jobs SET title=%s, description=%s, location=%s, salary=%s WHERE id=%s",
+                (title, description, location, salary, job_id),
+            )
+            conn.commit()
+        except Exception as err:
+            print(f"Error: {err}")
+            return "Failed to update job", 500
+        finally:
+            if conn:
+                conn.close()
+
+        return redirect("/admin")
+
+    try:
+        conn = connect()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM jobs_deets WHERE job_id=%s", (job_id,))
+        jobs_dict = cursor.fetchone()
+    except Exception as err:
+        print(f"Error: {err}")
+        return "Failed to fetch job", 500
+    finally:
+        if conn:
+            conn.close()
+
+    return render_template("edit_job.html", jobs_dict=jobs_dict)
+
+@app.route("/delete_job/<int:job_id>")
+def delete_job(job_id):
+    try:
+        conn = connect()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM jobs_deets WHERE j_id=%s", (job_id,))
+        conn.commit()
+    except Exception as err:
+        print(f"Error: {err}")
+        return "Failed to delete job", 500
+    finally:
+        if conn:
+            conn.close()
+
+    return redirect("/admin")
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',debug=True)
-
+    app.run(host="0.0.0.0", debug=True)
