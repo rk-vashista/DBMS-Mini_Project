@@ -1,7 +1,8 @@
 # Idiot Careers
 
 Welcome to **Idiot Careers**, a Flask-based web application designed to connect job seekers with their dream jobs. Our platform offers a user-friendly interface for both job seekers and employers, making the job search and posting process as smooth as possible.
-
+<br><br>
+<image src="/static/banner.jpg">
 ## Features
 
 - **Job Listings**: Browse through a wide range of job listings tailored to your skills and preferences.
